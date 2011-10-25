@@ -81,6 +81,7 @@ public abstract class LimitConnectedUsersFilter implements Filter
     private static final String I18N_MESSAGE_MESSAGE_MAX_CONNECTED_USERS = "limitconnectedusers.message.max_connected_users";
     private static final String I18N_MESSAGE_MAIL_SENDER_SUBJECT_MAX_CONNECTED_USERS = "limitconnectedusers.mail.sender_subject_max_connected_users";
     private static final String I18N_MESSAGE_MAIL_SENDER_NAME_MAX_CONNECTED_USERS = "limitconnectedusers.mail.sender_name_max_connected_users";
+    private static final String I18N_MESSAGE_MAIL_SENDER_MAIL_MAX_CONNECTED_USERS = "limitconnectedusers.mail.sender_mail_max_connected_users";
 
     //Template
     private static final String TEMPLATE_MAIL_MESSAGE = "skins/plugins/limitconnectedusers/notify_mail_limited_connected_users.html";
@@ -197,11 +198,11 @@ public abstract class LimitConnectedUsersFilter implements Filter
         HashMap<String, Object> model = new HashMap<String, Object>(  );
         model.put( MARK_ALERT_DATE, strDate );
 
-        String strSenderEmail = MailService.getNoReplyEmail(  );
+        
         HtmlTemplate templateMail = AppTemplateService.getTemplate( TEMPLATE_MAIL_MESSAGE, request.getLocale(  ), model );
         MailService.sendMailHtml( _strNotifiedMailingList, null, null,
             I18nService.getLocalizedString( I18N_MESSAGE_MAIL_SENDER_NAME_MAX_CONNECTED_USERS, request.getLocale(  ) ),
-            strSenderEmail,
+            I18nService.getLocalizedString( I18N_MESSAGE_MAIL_SENDER_MAIL_MAX_CONNECTED_USERS, request.getLocale(  ) ),
             I18nService.getLocalizedString( I18N_MESSAGE_MAIL_SENDER_SUBJECT_MAX_CONNECTED_USERS, request.getLocale(  ) ),
             templateMail.getHtml(  ), true );
     }
