@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<plug-in>
     <!-- Plugin Informations -->
     <name>limitconnectedusers</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>1.0.1</version>
+    <version>1.0.1-SNAPSHOT</version>
     <description>limitconnectedusers.plugin.description</description>
     <documentation/>
     <installation/>
@@ -20,7 +21,7 @@
 	<filters>
        <filter>
            <filter-name>limitConnectedUsersSite</filter-name>
-           <url-pattern>/jsp/site/*</url-pattern>
+           <url-pattern>/jsp/site/Portal.jsp</url-pattern>
            <filter-class>fr.paris.lutece.plugins.limitconnectedusers.service.filter.LimitConnectedUsersFilterSite</filter-class>
 
            <init-param>
@@ -29,7 +30,7 @@
            </init-param>
 		</filter>
 		<filter>
-           <filter-name>limitConnectedUsersSite</filter-name>
+           <filter-name>limitConnectedUsersAdmin</filter-name>
            <url-pattern>/jsp/admin/*</url-pattern>
            <filter-class>fr.paris.lutece.plugins.limitconnectedusers.service.filter.LimitConnectedUsersFilterAdmin</filter-class>
 

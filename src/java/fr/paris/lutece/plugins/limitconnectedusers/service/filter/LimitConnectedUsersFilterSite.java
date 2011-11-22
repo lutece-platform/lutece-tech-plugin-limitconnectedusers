@@ -33,16 +33,18 @@
  */
 package fr.paris.lutece.plugins.limitconnectedusers.service.filter;
 
-import javax.servlet.http.HttpServletRequest;
-
 import fr.paris.lutece.portal.service.message.SiteMessage;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 import fr.paris.lutece.portal.service.message.SiteMessageService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
- * This class extends LimitConnectedUsersFilter and use SiteMessageService for display error Message
+ * This class extends LimitConnectedUsersFilter and use SiteMessageService for
+ * display error Message
+ *
  * @author merlinfe
  *
  */
@@ -54,11 +56,8 @@ public class LimitConnectedUsersFilterSite extends LimitConnectedUsersFilter
     {
         try
         {
-            //SiteMessageService.setMessage( request, strMessageKey, messageArgs, strTitleKey, null, "",
-            //    SiteMessage.TYPE_STOP );
-            
-        	SiteMessageService.setMessage(  request, strMessageKey, messageArgs,
-                     strTitleKey, null, "", SiteMessage.TYPE_STOP, null,request.getRequestURI() );
+            SiteMessageService.setMessage( request, strMessageKey, messageArgs, strTitleKey, null, "",
+                SiteMessage.TYPE_STOP, getPrameterMap( request ), request.getRequestURI(  ) );
         }
         catch ( SiteMessageException lme )
         {

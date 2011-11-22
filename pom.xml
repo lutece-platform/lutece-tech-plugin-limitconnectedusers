@@ -42,8 +42,8 @@
 
 	</dependencies>
 	<properties>
-		<jiraProjectName>ARCHIVE</jiraProjectName>
-		<jiraComponentId>10571</jiraComponentId>
+		<jiraProjectName>LIMITCONNECTEDUSERS</jiraProjectName>
+		<jiraComponentId>10622</jiraComponentId>
 	</properties>
 
 	 <scm>

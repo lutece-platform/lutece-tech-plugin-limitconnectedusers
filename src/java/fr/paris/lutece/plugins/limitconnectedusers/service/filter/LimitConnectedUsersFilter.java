@@ -48,6 +48,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import java.io.IOException;
 
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -198,12 +199,36 @@ public abstract class LimitConnectedUsersFilter implements Filter
         HashMap<String, Object> model = new HashMap<String, Object>(  );
         model.put( MARK_ALERT_DATE, strDate );
 
-        
         HtmlTemplate templateMail = AppTemplateService.getTemplate( TEMPLATE_MAIL_MESSAGE, request.getLocale(  ), model );
         MailService.sendMailHtml( _strNotifiedMailingList, null, null,
             I18nService.getLocalizedString( I18N_MESSAGE_MAIL_SENDER_NAME_MAX_CONNECTED_USERS, request.getLocale(  ) ),
             I18nService.getLocalizedString( I18N_MESSAGE_MAIL_SENDER_MAIL_MAX_CONNECTED_USERS, request.getLocale(  ) ),
             I18nService.getLocalizedString( I18N_MESSAGE_MAIL_SENDER_SUBJECT_MAX_CONNECTED_USERS, request.getLocale(  ) ),
             templateMail.getHtml(  ), true );
+    }
+
+    /**
+     * return the parameters Map
+     * @param request the HttpServletRequest
+     * @return the parameters Map  
+     */
+    protected Map<String, String> getPrameterMap( HttpServletRequest request )
+    {
+        Map<String, String> mapModifyParam = new HashMap<String, String>(  );
+        String paramName = "";
+
+        // Get request paramaters and store them in a HashMap
+        if ( request != null )
+        {
+            Enumeration<?> enumParam = request.getParameterNames(  );
+
+            while ( enumParam.hasMoreElements(  ) )
+            {
+                paramName = (String) enumParam.nextElement(  );
+                mapModifyParam.put( paramName, request.getParameter( paramName ) );
+            }
+        }
+
+        return mapModifyParam;
     }
 }
