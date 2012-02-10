@@ -73,7 +73,7 @@ public final class LimitConnectedUsersSessionListener implements HttpSessionList
     @SuppressWarnings( "unchecked" )
     public void sessionDestroyed( HttpSessionEvent sessionEvent )
     {
-        // On enlève la session de l'utilisateur à la liste des sessions actives
+        // On enlÃ¨ve la session de l'utilisateur Ã  la liste des sessions actives
         List<String> sessionsActives = (List<String>) sessionEvent.getSession(  ).getServletContext(  )
                                                                   .getAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_LISTE_SESSIONS_ACTIVES );
 

@@ -33,7 +33,7 @@
  */
 
 /*
- * Creation date : 14 août 09 (by sBecker)
+ * Creation date : 14 aoÃ»t 09 (by sBecker)
  */
 package fr.paris.lutece.plugins.limitconnectedusers.service.filter;
 
@@ -64,7 +64,7 @@ import javax.servlet.http.HttpSession;
 
 
 /**
- * Filtre de servlet permettant de vérifier le nombre de session active
+ * Filtre de servlet permettant de vÃ©rifier le nombre de session active
  * @author merlinfe
  */
 public abstract class LimitConnectedUsersFilter implements Filter
@@ -113,7 +113,7 @@ public abstract class LimitConnectedUsersFilter implements Filter
     {
         if ( _bActivate && request instanceof HttpServletRequest )
         {
-            // Récupération de la session de l'utilisateur
+            // RÃ©cupÃ©ration de la session de l'utilisateur
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpSession session = httpRequest.getSession( true );
 
@@ -126,7 +126,7 @@ public abstract class LimitConnectedUsersFilter implements Filter
             if ( sessionsActives != null )
             {
                 /*
-                 * On ajoute la session de l'utilisateur à la liste des sessions actives dans le ServletContext
+                 * On ajoute la session de l'utilisateur Ã  la liste des sessions actives dans le ServletContext
                  */
                 if ( !sessionsActives.contains( session.getId(  ) ) &&
                         ( sessionsActives.size(  ) < _nMaxConnectedUsers ) )
