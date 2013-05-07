@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2012, Mairie de Paris
+ * Copyright (c) 2002-2013, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -72,7 +72,7 @@ public abstract class LimitConnectedUsersFilter implements Filter
     // /** Identifiant de session pour l'utilisateur courant */
     // private static final String SESSION_FRONT_OFFICE_USER = "utilisateur";
     private static final String ACTIVATE_LIMIT_CONNECTED_USERS_FILTER = "activate";
-    private static final String PROPERTY_MAX_CONNECTED_USERS = "limitconnectedusers.maxConnectedUers";
+    private static final String PROPERTY_MAX_CONNECTED_USERS = "limitconnectedusers.maxConnectedUsers";
     private static final String PROPERTY_NOTIFIED_MAILING_LIST = "limitconnectedusers.notifiedMailingList";
     private static final int DEFAULT_NB_MAX = 200;
     private static final String MARK_NB_MAX_CONNECTED_USERS = "nb_max_connected_users";
