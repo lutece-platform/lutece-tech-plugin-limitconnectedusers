@@ -40,12 +40,15 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- * This class extends LimitConnectedUsersFilter and use AdminMessageService for display error Message
- * @author merlinfe
+ * This class extends LimitConnectedUsersFilter and use AdminMessageService for
+ * display error Message
  *
  */
 public class LimitConnectedUsersFilterAdmin extends LimitConnectedUsersFilter
 {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getMessageRelativeUrl( HttpServletRequest request, String strMessageKey, Object[] messageArgs,
         String strTitleKey )

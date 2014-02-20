@@ -44,14 +44,13 @@ import javax.servlet.http.HttpSessionListener;
 
 /**
  * LimitConnectedUsersSessionListener
- * @author merlinfe
  */
 public final class LimitConnectedUsersSessionListener implements HttpSessionListener
 {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings( "unchecked" )
+    @Override
     public void sessionCreated( HttpSessionEvent sessionEvent )
     {
         //check if active session list exist
@@ -70,7 +69,7 @@ public final class LimitConnectedUsersSessionListener implements HttpSessionList
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings( "unchecked" )
+    @Override
     public void sessionDestroyed( HttpSessionEvent sessionEvent )
     {
         // On enlève la session de l'utilisateur à la liste des sessions actives

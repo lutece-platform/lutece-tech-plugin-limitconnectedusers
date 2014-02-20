@@ -34,7 +34,7 @@
 package fr.paris.lutece.plugins.limitconnectedusers.service;
 
 
-/*
+/**
  * LimitConnectedUsersConstants
  */
 public class LimitConnectedUsersConstants

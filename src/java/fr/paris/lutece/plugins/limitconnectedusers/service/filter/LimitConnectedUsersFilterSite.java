@@ -50,6 +50,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LimitConnectedUsersFilterSite extends LimitConnectedUsersFilter
 {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getMessageRelativeUrl( HttpServletRequest request, String strMessageKey, Object[] messageArgs,
         String strTitleKey )
@@ -57,7 +60,7 @@ public class LimitConnectedUsersFilterSite extends LimitConnectedUsersFilter
         try
         {
             SiteMessageService.setMessage( request, strMessageKey, messageArgs, strTitleKey, null, "",
-                SiteMessage.TYPE_STOP, getPrameterMap( request ), request.getRequestURI(  ) );
+                SiteMessage.TYPE_STOP, getParameterMap( request ), request.getRequestURI(  ) );
         }
         catch ( SiteMessageException lme )
         {

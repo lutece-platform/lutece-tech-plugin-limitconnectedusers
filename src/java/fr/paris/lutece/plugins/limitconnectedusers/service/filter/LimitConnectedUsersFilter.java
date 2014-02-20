@@ -45,6 +45,8 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.IOException;
 
 import java.util.Date;
@@ -99,6 +101,7 @@ public abstract class LimitConnectedUsersFilter implements Filter
     /**
      * {@inheritDoc}
      */
+    @Override
     public void destroy(  )
     {
         //
@@ -107,7 +110,7 @@ public abstract class LimitConnectedUsersFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings( "unchecked" )
+    @Override
     public void doFilter( ServletRequest request, ServletResponse response, FilterChain filterChain )
         throws IOException, ServletException
     {
@@ -163,6 +166,7 @@ public abstract class LimitConnectedUsersFilter implements Filter
     /**
      * {@inheritDoc}
      */
+    @Override
     public void init( FilterConfig filterConfig )
     {
         _filterConfig = filterConfig;
@@ -210,14 +214,14 @@ public abstract class LimitConnectedUsersFilter implements Filter
     /**
      * return the parameters Map
      * @param request the HttpServletRequest
-     * @return the parameters Map  
+     * @return the parameters Map
      */
-    protected Map<String, String> getPrameterMap( HttpServletRequest request )
+    protected Map<String, Object> getParameterMap( HttpServletRequest request )
     {
-        Map<String, String> mapModifyParam = new HashMap<String, String>(  );
-        String paramName = "";
+        Map<String, Object> mapModifyParam = new HashMap<String, Object>(  );
+        String paramName = StringUtils.EMPTY;
 
-        // Get request paramaters and store them in a HashMap
+        // Get request parameters and store them in a HashMap
         if ( request != null )
         {
             Enumeration<?> enumParam = request.getParameterNames(  );
