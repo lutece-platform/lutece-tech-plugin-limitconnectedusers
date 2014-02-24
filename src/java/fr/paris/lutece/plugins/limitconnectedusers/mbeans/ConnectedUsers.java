@@ -9,7 +9,7 @@ import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
  * ConnectUsers
  *
  */
-public class ConnectUsers implements ConnectedUsersMBean
+public class ConnectedUsers implements ConnectedUsersMBean
 {
     /**
      * {@inheritDoc }

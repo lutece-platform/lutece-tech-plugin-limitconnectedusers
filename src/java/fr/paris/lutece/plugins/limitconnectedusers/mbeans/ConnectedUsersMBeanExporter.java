@@ -24,6 +24,6 @@ public class ConnectedUsersMBeanExporter implements MBeanExporter
     @Override
     public Object getMBean(  )
     {
-        return new ConnectUsers(  );
+        return new ConnectedUsers(  );
     }
 }
