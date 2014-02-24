@@ -33,13 +33,12 @@
  */
 package fr.paris.lutece.plugins.limitconnectedusers.service.sessionlistener;
 
-import fr.paris.lutece.plugins.limitconnectedusers.service.LimitConnectedUsersConstants;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+
+import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
 
 
 /**
@@ -53,17 +52,7 @@ public final class LimitConnectedUsersSessionListener implements HttpSessionList
     @Override
     public void sessionCreated( HttpSessionEvent sessionEvent )
     {
-        //check if active session list exist
-        if ( sessionEvent.getSession(  ).getServletContext(  )
-                             .getAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_LISTE_SESSIONS_ACTIVES ) == null )
-        {
-            sessionEvent.getSession(  ).getServletContext(  )
-                        .setAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_LISTE_SESSIONS_ACTIVES,
-                new ArrayList<String>(  ) );
-            sessionEvent.getSession(  ).getServletContext(  )
-                        .setAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_IS_NB_MAXIMUM_USERS_REACHED,
-                Boolean.FALSE );
-        }
+ 
     }
 
     /**
@@ -73,19 +62,15 @@ public final class LimitConnectedUsersSessionListener implements HttpSessionList
     public void sessionDestroyed( HttpSessionEvent sessionEvent )
     {
         // On enlève la session de l'utilisateur à la liste des sessions actives
-        List<String> sessionsActives = (List<String>) sessionEvent.getSession(  ).getServletContext(  )
-                                                                  .getAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_LISTE_SESSIONS_ACTIVES );
+        List<String> sessionsActives = LimitSessionService.getService().getSessionsActive();
 
         if ( ( sessionsActives != null ) && sessionsActives.contains( sessionEvent.getSession(  ).getId(  ) ) )
         {
             sessionsActives.remove( sessionEvent.getSession(  ).getId(  ) );
 
-            if ( (Boolean) sessionEvent.getSession(  ).getServletContext(  )
-                                           .getAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_IS_NB_MAXIMUM_USERS_REACHED ) )
+            if ( LimitSessionService.getService().isNbMaximumUsersReached() )
             {
-                sessionEvent.getSession(  ).getServletContext(  )
-                            .setAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_IS_NB_MAXIMUM_USERS_REACHED,
-                    Boolean.FALSE );
+            	LimitSessionService.getService().setNbMaximumUsersReached(false);
             }
         }
     }

@@ -38,6 +38,7 @@
 package fr.paris.lutece.plugins.limitconnectedusers.service.filter;
 
 import fr.paris.lutece.plugins.limitconnectedusers.service.LimitConnectedUsersConstants;
+import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
@@ -87,7 +88,7 @@ public abstract class LimitConnectedUsersFilter implements Filter
     private static final String I18N_MESSAGE_MAIL_SENDER_MAIL_MAX_CONNECTED_USERS = "limitconnectedusers.mail.sender_mail_max_connected_users";
 
     //Template
-    private static final String TEMPLATE_MAIL_MESSAGE = "skins/plugins/limitconnectedusers/notify_mail_limited_connected_users.html";
+    private static final String TEMPLATE_MAIL_MESSAGE = "skin/plugins/limitconnectedusers/notify_mail_limited_connected_users.html";
 
     //MARK
     private static final String MARK_ALERT_DATE = "alert_date";
@@ -121,10 +122,8 @@ public abstract class LimitConnectedUsersFilter implements Filter
             HttpSession session = httpRequest.getSession( true );
 
             // Liste des sessions actives dans le ServletContext
-            List<String> sessionsActives = (List<String>) session.getServletContext(  )
-                                                                 .getAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_LISTE_SESSIONS_ACTIVES );
-            Boolean bNbMaximumUsersReached = (Boolean) session.getServletContext(  )
-                                                              .getAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_IS_NB_MAXIMUM_USERS_REACHED );
+            List<String> sessionsActives = LimitSessionService.getService().getSessionsActive();
+            Boolean bNbMaximumUsersReached = LimitSessionService.getService().isNbMaximumUsersReached();
 
             if ( sessionsActives != null )
             {
@@ -138,15 +137,12 @@ public abstract class LimitConnectedUsersFilter implements Filter
                 }
                 else if ( !sessionsActives.contains( session.getId(  ) ) )
                 {
-                    Map<String, String> parameters = new HashMap<String, String>(  );
-                    parameters.put( MARK_NB_MAX_CONNECTED_USERS, String.valueOf( _nMaxConnectedUsers ) );
-
-                    if ( ( bNbMaximumUsersReached == null ) || !bNbMaximumUsersReached )
+                    
+                    if (  !bNbMaximumUsersReached )
                     {
-                        session.getServletContext(  )
-                               .setAttribute( LimitConnectedUsersConstants.CONTEXT_ATTRIBUTE_IS_NB_MAXIMUM_USERS_REACHED,
-                            Boolean.TRUE );
-
+                        
+                    	LimitSessionService.getService().setNbMaximumUsersReached(true);
+                    	
                         if ( ( _strNotifiedMailingList != null ) && !_strNotifiedMailingList.trim(  ).equals( "" ) )
                         {
                             sendAlertMail( httpRequest );

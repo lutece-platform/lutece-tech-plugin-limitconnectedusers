@@ -1,0 +1,1 @@
+<bean id="limitconnectedusers.connectedUsersMBeanExporter" class="fr.paris.lutece.plugins.limitconnectedusers.mbeans.ConnectedUsersMBeanExporter" />
