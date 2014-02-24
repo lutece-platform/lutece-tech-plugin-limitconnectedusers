@@ -37,7 +37,7 @@
  */
 package fr.paris.lutece.plugins.limitconnectedusers.service.filter;
 
-import fr.paris.lutece.plugins.limitconnectedusers.service.LimitConnectedUsersConstants;
+
 import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
