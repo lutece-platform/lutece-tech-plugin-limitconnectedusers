@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2013, Mairie de Paris
+ * Copyright (c) 2002-2014, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,12 +31,7 @@
  *
  * License 1.0
  */
-
-/*
- * Creation date : 14 août 09 (by sBecker)
- */
 package fr.paris.lutece.plugins.limitconnectedusers.service.filter;
-
 
 import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -67,13 +62,11 @@ import javax.servlet.http.HttpSession;
 
 
 /**
- * Filtre de servlet permettant de vérifier le nombre de session active
- * @author merlinfe
+ * Session filter for verify active session
+ *
  */
 public abstract class LimitConnectedUsersFilter implements Filter
 {
-    // /** Identifiant de session pour l'utilisateur courant */
-    // private static final String SESSION_FRONT_OFFICE_USER = "utilisateur";
     private static final String ACTIVATE_LIMIT_CONNECTED_USERS_FILTER = "activate";
     private static final String PROPERTY_MAX_CONNECTED_USERS = "limitconnectedusers.maxConnectedUsers";
     private static final String PROPERTY_NOTIFIED_MAILING_LIST = "limitconnectedusers.notifiedMailingList";
@@ -105,7 +98,6 @@ public abstract class LimitConnectedUsersFilter implements Filter
     @Override
     public void destroy(  )
     {
-        //
     }
 
     /**
@@ -117,19 +109,14 @@ public abstract class LimitConnectedUsersFilter implements Filter
     {
         if ( _bActivate && request instanceof HttpServletRequest )
         {
-            // Récupération de la session de l'utilisateur
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpSession session = httpRequest.getSession( true );
 
-            // Liste des sessions actives dans le ServletContext
-            List<String> sessionsActives = LimitSessionService.getService().getSessionsActive();
-            Boolean bNbMaximumUsersReached = LimitSessionService.getService().isNbMaximumUsersReached();
+            List<String> sessionsActives = LimitSessionService.getService(  ).getSessionsActive(  );
+            Boolean bNbMaximumUsersReached = LimitSessionService.getService(  ).isNbMaximumUsersReached(  );
 
             if ( sessionsActives != null )
             {
-                /*
-                 * On ajoute la session de l'utilisateur à la liste des sessions actives dans le ServletContext
-                 */
                 if ( !sessionsActives.contains( session.getId(  ) ) &&
                         ( sessionsActives.size(  ) < _nMaxConnectedUsers ) )
                 {
@@ -137,12 +124,10 @@ public abstract class LimitConnectedUsersFilter implements Filter
                 }
                 else if ( !sessionsActives.contains( session.getId(  ) ) )
                 {
-                    
-                    if (  !bNbMaximumUsersReached )
+                    if ( !bNbMaximumUsersReached )
                     {
-                        
-                    	LimitSessionService.getService().setNbMaximumUsersReached(true);
-                    	
+                        LimitSessionService.getService(  ).setNbMaximumUsersReached( true );
+
                         if ( ( _strNotifiedMailingList != null ) && !_strNotifiedMailingList.trim(  ).equals( "" ) )
                         {
                             sendAlertMail( httpRequest );

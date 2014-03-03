@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2013, Mairie de Paris
+ * Copyright (c) 2002-2014, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@ import javax.servlet.http.HttpServletRequest;
  * This class extends LimitConnectedUsersFilter and use SiteMessageService for
  * display error Message
  *
- * @author merlinfe
+ *
  *
  */
 public class LimitConnectedUsersFilterSite extends LimitConnectedUsersFilter
