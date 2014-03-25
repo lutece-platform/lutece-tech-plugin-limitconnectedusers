@@ -10,7 +10,7 @@
     <artifactId>plugin-limitconnectedusers</artifactId>
     <version>1.0.3-SNAPSHOT</version>
     <name>Limit connected users Plugin</name>
-    <description>Limit connected users Plugin</description>
+    <description>Lutece limit connected users plugin</description>
     <packaging>lutece-plugin</packaging>
 
     <repositories>
