@@ -9,7 +9,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>plugin-limitconnectedusers</artifactId>
     <version>1.0.3-SNAPSHOT</version>
-    <name>Limit connected users Plugin</name>
+    <name>Lutece limit connected users plugin</name>
     <description>Lutece limit connected users plugin</description>
     <packaging>lutece-plugin</packaging>
 
