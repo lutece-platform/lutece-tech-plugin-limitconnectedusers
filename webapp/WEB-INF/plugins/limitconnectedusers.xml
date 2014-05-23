@@ -21,7 +21,7 @@
        <filter>
            <filter-name>limitConnectedUsersSite</filter-name>
            <url-pattern>/jsp/site/Portal.jsp</url-pattern>
-           <filter-class>fr.paris.lutece.plugins.limitconnectedusers.service.filter.LimitConnectedUsersFilterSite</filter-class>
+           <filter-class>fr.paris.lutece.plugins.limitconnectedusers.service.filter.LimitConnectedUsersFilter</filter-class>
 
            <init-param>
                <param-name>activate</param-name>
@@ -31,7 +31,7 @@
 		<filter>
            <filter-name>limitConnectedUsersAdmin</filter-name>
            <url-pattern>/jsp/admin/*</url-pattern>
-           <filter-class>fr.paris.lutece.plugins.limitconnectedusers.service.filter.LimitConnectedUsersFilterAdmin</filter-class>
+           <filter-class>fr.paris.lutece.plugins.limitconnectedusers.service.filter.LimitConnectedUsersFilter</filter-class>
 
            <init-param>
                <param-name>activate</param-name>

@@ -33,8 +33,8 @@
  */
 package fr.paris.lutece.plugins.limitconnectedusers.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -45,7 +45,7 @@ import java.util.List;
 public class LimitSessionService
 {
     private static LimitSessionService _singleton;
-    private List<String> _listSessionsActive = new ArrayList<String>(  );
+    private Set<String> _listSessionsActive = new HashSet<String>();
     private boolean _bNbMaximumUsersReached;
 
     /**
@@ -66,7 +66,7 @@ public class LimitSessionService
      *
      * @return the list of session active
      */
-    public List<String> getSessionsActive(  )
+    public Set<String> getSessionsActive(  )
     {
         return _listSessionsActive;
     }

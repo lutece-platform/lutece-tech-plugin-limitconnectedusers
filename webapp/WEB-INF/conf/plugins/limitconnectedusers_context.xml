@@ -2,4 +2,5 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
 	<bean id="limitconnectedusers.connectedUsersMBeanExporter" class="fr.paris.lutece.plugins.limitconnectedusers.mbeans.ConnectedUsersMBeanExporter" />
+	<bean id="limitconnectedusers.limitConnectedUsersSitePropertiesGroup" class="fr.paris.lutece.plugins.limitconnectedusers.service.LimitConnectedUsersSitePropertiesGroup" />
 </beans>

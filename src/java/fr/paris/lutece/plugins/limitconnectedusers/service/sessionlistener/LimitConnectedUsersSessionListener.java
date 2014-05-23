@@ -33,12 +33,12 @@
  */
 package fr.paris.lutece.plugins.limitconnectedusers.service.sessionlistener;
 
-import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
-
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+
+import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
 
 
 /**
@@ -61,7 +61,7 @@ public final class LimitConnectedUsersSessionListener implements HttpSessionList
     public void sessionDestroyed( HttpSessionEvent sessionEvent )
     {
         // On enlève la session de l'utilisateur à la liste des sessions actives
-        List<String> sessionsActives = LimitSessionService.getService(  ).getSessionsActive(  );
+        Set<String> sessionsActives = LimitSessionService.getService(  ).getSessionsActive(  );
 
         if ( ( sessionsActives != null ) && sessionsActives.contains( sessionEvent.getSession(  ).getId(  ) ) )
         {
