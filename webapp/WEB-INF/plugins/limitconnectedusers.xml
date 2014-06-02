@@ -2,7 +2,7 @@
     <!-- Plugin Informations -->
     <name>limitconnectedusers</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>1.0.3</version>
+    <version>1.1.0</version>
     <description>limitconnectedusers.plugin.description</description>
     <documentation/>
     <installation/>
