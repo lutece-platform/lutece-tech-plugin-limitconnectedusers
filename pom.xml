@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>plugin-limitconnectedusers</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2-SNAPSHOT</version>
     <name>Lutece limit connected users plugin</name>
     <description>Lutece limit connected users plugin</description>
     <packaging>lutece-plugin</packaging>
@@ -47,8 +47,8 @@
     </properties>
 
     <scm>
-        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/tags/plugin-limitconnectedusers-1.1.1</connection>
-        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/tags/plugin-limitconnectedusers-1.1.1</developerConnection>
-        <url>http://dev.lutece.paris.fr/svn/lutece/portal/tags/plugin-limitconnectedusers-1.1.1</url>
+        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/plugin-limitconnectedusers</connection>
+        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/plugin-limitconnectedusers</developerConnection>
+        <url>http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/plugin-limitconnectedusers</url>
     </scm>
 </project>
