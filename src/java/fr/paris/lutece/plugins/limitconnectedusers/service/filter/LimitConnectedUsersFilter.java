@@ -131,12 +131,18 @@ public  class LimitConnectedUsersFilter implements Filter
 
             if ( sessionsActives != null )
             {
-                if ( !sessionsActives.contains( session.getId(  ) ) &&
-                        ( sessionsActives.size(  ) < _nMaxConnectedUsers ) )
+                if ( !sessionsActives.contains( session.getId(  ) ) 
+                        && _nMaxConnectedUsers < 0 )
                 {
                     sessionsActives.add( session.getId(  ) );
                 }
-                else if ( !sessionsActives.contains( session.getId(  ) ) )
+                else if ( !sessionsActives.contains( session.getId(  ) ) 
+                        && ( sessionsActives.size(  ) < _nMaxConnectedUsers ) 
+                        && _nMaxConnectedUsers >= 0 )
+                {
+                    sessionsActives.add( session.getId(  ) );
+                }
+                else if ( !sessionsActives.contains( session.getId(  ) ) && _nMaxConnectedUsers > 0)
                 {
                     if ( !bNbMaximumUsersReached )
                     {
@@ -187,7 +193,7 @@ public  class LimitConnectedUsersFilter implements Filter
             _bActivate = new Boolean( paramValue );
         }
 
-        _nMaxConnectedUsers = AppPropertiesService.getPropertyInt( PROPERTY_MAX_CONNECTED_USERS, DEFAULT_NB_MAX );
+        _nMaxConnectedUsers = (int) AppPropertiesService.getPropertyLong( PROPERTY_MAX_CONNECTED_USERS, DEFAULT_NB_MAX );
    
     }
 
