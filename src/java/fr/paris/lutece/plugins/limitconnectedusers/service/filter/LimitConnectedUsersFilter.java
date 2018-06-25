@@ -71,14 +71,14 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 public  class LimitConnectedUsersFilter implements Filter
 {
     private static final String ACTIVATE_LIMIT_CONNECTED_USERS_FILTER = "activate";
-    private static final String PROPERTY_MAX_CONNECTED_USERS = "limitconnectedusers.maxConnectedUsers";
+    public static final String PROPERTY_MAX_CONNECTED_USERS = "limitconnectedusers.maxConnectedUsers";
     
     private static final String KEY_LIMIT_CONNECTED_USERS_MESSAGE= "limitconnectedusers.site_property.limit_message.textblock";
     private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MESSAGE= "limitconnectedusers.site_property.limit_notification_message.textblock";
     private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SENDER_NAME= "limitconnectedusers.site_property.limit_notification_sender_name";
     private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SUBJECT= "limitconnectedusers.site_property.limit_notification_subject.textblock";
     private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MAILING_LIST= "limitconnectedusers.site_property.limit_notification_mailing_list.textblock";
-    private static final int DEFAULT_NB_MAX = 200;
+    public static final int DEFAULT_NB_MAX = 200;
 
     //i18n_message
     private static final String I18N_MESSAGE_TITLE_MAX_CONNECTED_USERS = "limitconnectedusers.title.max_connected_users";
@@ -131,12 +131,18 @@ public  class LimitConnectedUsersFilter implements Filter
 
             if ( sessionsActives != null )
             {
-                if ( !sessionsActives.contains( session.getId(  ) ) &&
-                        ( sessionsActives.size(  ) < _nMaxConnectedUsers ) )
+                if ( !sessionsActives.contains( session.getId(  ) ) 
+                        && _nMaxConnectedUsers < 0 )
                 {
                     sessionsActives.add( session.getId(  ) );
                 }
-                else if ( !sessionsActives.contains( session.getId(  ) ) )
+                else if ( !sessionsActives.contains( session.getId(  ) ) 
+                        && ( sessionsActives.size(  ) < _nMaxConnectedUsers ) 
+                        && _nMaxConnectedUsers >= 0 )
+                {
+                    sessionsActives.add( session.getId(  ) );
+                }
+                else if ( !sessionsActives.contains( session.getId(  ) ) && _nMaxConnectedUsers > 0)
                 {
                     if ( !bNbMaximumUsersReached )
                     {
@@ -187,7 +193,7 @@ public  class LimitConnectedUsersFilter implements Filter
             _bActivate = new Boolean( paramValue );
         }
 
-        _nMaxConnectedUsers = AppPropertiesService.getPropertyInt( PROPERTY_MAX_CONNECTED_USERS, DEFAULT_NB_MAX );
+        _nMaxConnectedUsers = (int) AppPropertiesService.getPropertyLong( PROPERTY_MAX_CONNECTED_USERS, DEFAULT_NB_MAX );
    
     }
 

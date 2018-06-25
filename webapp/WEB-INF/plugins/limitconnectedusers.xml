@@ -44,4 +44,15 @@
   	 			<listener-class>fr.paris.lutece.plugins.limitconnectedusers.service.sessionlistener.LimitConnectedUsersSessionListener</listener-class>
 		</listener>
 	</listeners>
+        
+    <!-- Dashboard  components -->
+    <dashboard-components>
+        <dashboard-component>
+            <dashboard-component-name>LIMIT_CONNECTED_USERS</dashboard-component-name>
+            <dashboard-component-class>fr.paris.lutece.plugins.limitconnectedusers.web.LimitConnectedUsersDashboardComponent</dashboard-component-class>
+            <dashboard-feature-right>CORE_ADMIN_SITE</dashboard-feature-right>
+            <dashboard-zone>3</dashboard-zone>
+            <dashboard-zone-order>2</dashboard-zone-order>
+        </dashboard-component>
+    </dashboard-components>
 </plug-in>

@@ -47,6 +47,7 @@ public class LimitSessionService
     private static LimitSessionService _singleton;
     private Set<String> _listSessionsActive = new HashSet<String>();
     private boolean _bNbMaximumUsersReached;
+    private int _nbSessions = 0;
 
     /**
      *
@@ -87,5 +88,28 @@ public class LimitSessionService
     public void setNbMaximumUsersReached( boolean _bNbMaximumUsersReached )
     {
         this._bNbMaximumUsersReached = _bNbMaximumUsersReached;
+    }
+    
+        
+    /**
+     * get absolute server Session number
+     * @return session nb
+     */   
+    public int getNbSessions() {
+        return _nbSessions;
+    }
+
+    /**
+     * add a session
+     */
+    public synchronized void addSession( ) {
+        this._nbSessions ++ ;
+    }
+    
+    /**
+     * remove a session
+     */
+    public synchronized void removeSession( ) {
+        this._nbSessions -- ;
     }
 }

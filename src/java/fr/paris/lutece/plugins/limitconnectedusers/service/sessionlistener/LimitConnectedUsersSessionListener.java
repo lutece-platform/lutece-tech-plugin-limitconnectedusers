@@ -52,6 +52,7 @@ public final class LimitConnectedUsersSessionListener implements HttpSessionList
     @Override
     public void sessionCreated( HttpSessionEvent sessionEvent )
     {
+        LimitSessionService.getService(  ).addSession( );
     }
 
     /**
@@ -60,6 +61,9 @@ public final class LimitConnectedUsersSessionListener implements HttpSessionList
     @Override
     public void sessionDestroyed( HttpSessionEvent sessionEvent )
     {
+        
+        LimitSessionService.getService(  ).removeSession( );
+        
         // On enlève la session de l'utilisateur à la liste des sessions actives
         Set<String> sessionsActives = LimitSessionService.getService(  ).getSessionsActive(  );
 
