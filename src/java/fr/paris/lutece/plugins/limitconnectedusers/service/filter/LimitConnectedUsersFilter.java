@@ -35,8 +35,11 @@ package fr.paris.lutece.plugins.limitconnectedusers.service.filter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.FieldPosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.Filter;
@@ -49,7 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
 import fr.paris.lutece.portal.service.datastore.DatastoreService;
@@ -200,7 +203,7 @@ public  class LimitConnectedUsersFilter implements Filter
      */
     private void sendAlertMail( HttpServletRequest request,String strMailingList )
     {
-        String strDate = DateUtil.getDateTimeString( new Date(  ).getTime(  ) );
+        String strDate = getDateTimeString( new Date(  ).getTime(  ) );
         HashMap<String, Object> model = new HashMap<String, Object>(  );
         String strNotificationMessage = DatastoreService.getDataValue(KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MESSAGE, I18nService.getLocalizedString(I18N_MESSAGE_MAIL_SENDER_MAIL_MAX_CONNECTED_USERS, request.getLocale(  )));
         
@@ -214,6 +217,14 @@ public  class LimitConnectedUsersFilter implements Filter
         MailService.sendMailHtml(strMailingList , null, null,strNotificationSenderName,MailService.getNoReplyEmail(),strNotificationSubject,templateMail.getHtml(  ), true );
     }
 
+    private String getDateTimeString( long lTime )
+    {
+        StringBuffer strDate = new StringBuffer(  );
+        SimpleDateFormat formatterDateTime = new SimpleDateFormat( "dd'/'MM'/'yyyy' 'HH':'mm", Locale.FRANCE );
+        formatterDateTime.format( new java.util.Date( lTime ), strDate, new FieldPosition( 0 ) );
+
+        return strDate.toString(  );
+    }
     
     
     /**
