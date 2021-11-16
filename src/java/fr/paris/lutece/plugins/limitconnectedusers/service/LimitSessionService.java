@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.limitconnectedusers.service;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  *
  * LimitSessionService
@@ -45,18 +44,18 @@ import java.util.Set;
 public class LimitSessionService
 {
     private static LimitSessionService _singleton;
-    private Set<String> _listSessionsActive = new HashSet<String>();
+    private Set<String> _listSessionsActive = new HashSet<String>( );
     private boolean _bNbMaximumUsersReached;
 
     /**
      *
      * @return LimitSessionService
      */
-    public static LimitSessionService getService(  )
+    public static LimitSessionService getService( )
     {
         if ( _singleton == null )
         {
-            _singleton = new LimitSessionService(  );
+            _singleton = new LimitSessionService( );
         }
 
         return _singleton;
@@ -66,7 +65,7 @@ public class LimitSessionService
      *
      * @return the list of session active
      */
-    public Set<String> getSessionsActive(  )
+    public Set<String> getSessionsActive( )
     {
         return _listSessionsActive;
     }
@@ -75,14 +74,15 @@ public class LimitSessionService
      *
      * @return true if the nb maximum users reached
      */
-    public boolean isNbMaximumUsersReached(  )
+    public boolean isNbMaximumUsersReached( )
     {
         return _bNbMaximumUsersReached;
     }
 
     /**
      *
-     * @param _bNbMaximumUsersReached true if the nb maximum users reached
+     * @param _bNbMaximumUsersReached
+     *            true if the nb maximum users reached
      */
     public void setNbMaximumUsersReached( boolean _bNbMaximumUsersReached )
     {

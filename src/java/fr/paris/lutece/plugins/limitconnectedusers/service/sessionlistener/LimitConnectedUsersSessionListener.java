@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,6 @@ import javax.servlet.http.HttpSessionListener;
 
 import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
 
-
 /**
  * LimitConnectedUsersSessionListener
  */
@@ -61,15 +60,15 @@ public final class LimitConnectedUsersSessionListener implements HttpSessionList
     public void sessionDestroyed( HttpSessionEvent sessionEvent )
     {
         // On enlève la session de l'utilisateur à la liste des sessions actives
-        Set<String> sessionsActives = LimitSessionService.getService(  ).getSessionsActive(  );
+        Set<String> sessionsActives = LimitSessionService.getService( ).getSessionsActive( );
 
-        if ( ( sessionsActives != null ) && sessionsActives.contains( sessionEvent.getSession(  ).getId(  ) ) )
+        if ( ( sessionsActives != null ) && sessionsActives.contains( sessionEvent.getSession( ).getId( ) ) )
         {
-            sessionsActives.remove( sessionEvent.getSession(  ).getId(  ) );
+            sessionsActives.remove( sessionEvent.getSession( ).getId( ) );
 
-            if ( LimitSessionService.getService(  ).isNbMaximumUsersReached(  ) )
+            if ( LimitSessionService.getService( ).isNbMaximumUsersReached( ) )
             {
-                LimitSessionService.getService(  ).setNbMaximumUsersReached( false );
+                LimitSessionService.getService( ).setNbMaximumUsersReached( false );
             }
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,13 +35,14 @@ package fr.paris.lutece.plugins.limitconnectedusers.mbeans;
 
 import java.io.IOException;
 
-
 public interface ConnectedUsersMBean
 {
     /**
-    * Users sessions count
-    * @return The sessions count
-    * @throws IOException If an error occurs
-    */
-    int getConnectedUsersCount(  ) throws IOException;
+     * Users sessions count
+     * 
+     * @return The sessions count
+     * @throws IOException
+     *             If an error occurs
+     */
+    int getConnectedUsersCount( ) throws IOException;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,32 +44,31 @@ public class LimitConnectedUsersSitePropertiesGroup implements ILocalizedSitePro
     private static final String KEY_DESCRIPTION = "limitconnectedusers.site_properties_group.description";
     private static final String PREFIX = "limitconnectedusers.site_property.";
 
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String getNameKey( )
+    {
+        return KEY_NAME;
+    }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public String getNameKey()
-    {
-        return KEY_NAME;
-    }
-    
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public String getDescriptionKey()
+    public String getDescriptionKey( )
     {
         return KEY_DESCRIPTION;
     }
 
-     /**
+    /**
      * {@inheritDoc }
      */
-   @Override
-    public String getDatastoreKeysPrefix()
+    @Override
+    public String getDatastoreKeysPrefix( )
     {
         return PREFIX;
     }
-    
- }
+
+}

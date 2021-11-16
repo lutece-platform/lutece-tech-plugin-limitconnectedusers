@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,52 +66,50 @@ import fr.paris.lutece.portal.web.constants.Markers;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
-
 /**
  * Session filter for verify active session
  *
  */
-public  class LimitConnectedUsersFilter implements Filter
+public class LimitConnectedUsersFilter implements Filter
 {
     private static final String ACTIVATE_LIMIT_CONNECTED_USERS_FILTER = "activate";
     private static final String PROPERTY_MAX_CONNECTED_USERS = "limitconnectedusers.maxConnectedUsers";
-    
-    private static final String KEY_LIMIT_CONNECTED_USERS_MESSAGE= "limitconnectedusers.site_property.limit_message.textblock";
-    private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MESSAGE= "limitconnectedusers.site_property.limit_notification_message.textblock";
-    private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SENDER_NAME= "limitconnectedusers.site_property.limit_notification_sender_name";
-    private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SUBJECT= "limitconnectedusers.site_property.limit_notification_subject.textblock";
-    private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MAILING_LIST= "limitconnectedusers.site_property.limit_notification_mailing_list.textblock";
+
+    private static final String KEY_LIMIT_CONNECTED_USERS_MESSAGE = "limitconnectedusers.site_property.limit_message.textblock";
+    private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MESSAGE = "limitconnectedusers.site_property.limit_notification_message.textblock";
+    private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SENDER_NAME = "limitconnectedusers.site_property.limit_notification_sender_name";
+    private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SUBJECT = "limitconnectedusers.site_property.limit_notification_subject.textblock";
+    private static final String KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MAILING_LIST = "limitconnectedusers.site_property.limit_notification_mailing_list.textblock";
     private static final int DEFAULT_NB_MAX = 200;
 
-    //i18n_message
+    // i18n_message
     private static final String I18N_MESSAGE_TITLE_MAX_CONNECTED_USERS = "limitconnectedusers.title.max_connected_users";
     private static final String I18N_MESSAGE_MESSAGE_MAX_CONNECTED_USERS = "limitconnectedusers.message.max_connected_users";
     private static final String I18N_MESSAGE_MAIL_SENDER_SUBJECT_MAX_CONNECTED_USERS = "limitconnectedusers.mail.sender_subject_max_connected_users";
     private static final String I18N_MESSAGE_MAIL_SENDER_NAME_MAX_CONNECTED_USERS = "limitconnectedusers.mail.sender_name_max_connected_users";
     private static final String I18N_MESSAGE_MAIL_SENDER_MAIL_MAX_CONNECTED_USERS = "limitconnectedusers.mail.sender_mail_max_connected_users";
 
-    //Template
+    // Template
     private static final String TEMPLATE_MAIL_MESSAGE = "skin/plugins/limitconnectedusers/notify_mail_limited_connected_users.html";
     private static final String TEMPLATE_USER_MESSAGE = "skin/plugins/limitconnectedusers/user_message_limited_connected_users.html";
 
-    //MARK
+    // MARK
     private static final String MARK_ALERT_DATE = "alert_date";
     private static final String MARK_MESSAGE = "message";
     private static final String MARK_PLUGIN_THEME = "plugin_theme";
     private static final String MARK_THEME = "theme";
     private static final String MARK_HTML_CONTENT_TYPE = "text/html";
-    
 
     /** filter config */
     protected FilterConfig _filterConfig = null;
     private int _nMaxConnectedUsers;
     private boolean _bActivate = false;
-   
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void destroy(  )
+    public void destroy( )
     {
     }
 
@@ -119,56 +117,55 @@ public  class LimitConnectedUsersFilter implements Filter
      * {@inheritDoc}
      */
     @Override
-    public void doFilter( ServletRequest request, ServletResponse response, FilterChain filterChain )
-        throws IOException, ServletException
+    public void doFilter( ServletRequest request, ServletResponse response, FilterChain filterChain ) throws IOException, ServletException
     {
-    	
-        if ( _bActivate && request instanceof HttpServletRequest  )
+
+        if ( _bActivate && request instanceof HttpServletRequest )
         {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse resp = (HttpServletResponse) response;
             HttpSession session = httpRequest.getSession( true );
 
-            Set<String> sessionsActives = LimitSessionService.getService(  ).getSessionsActive(  );
-            Boolean bNbMaximumUsersReached = LimitSessionService.getService(  ).isNbMaximumUsersReached(  );
+            Set<String> sessionsActives = LimitSessionService.getService( ).getSessionsActive( );
+            Boolean bNbMaximumUsersReached = LimitSessionService.getService( ).isNbMaximumUsersReached( );
 
             if ( sessionsActives != null )
             {
-                if ( !sessionsActives.contains( session.getId(  ) ) &&
-                        ( sessionsActives.size(  ) < _nMaxConnectedUsers ) )
+                if ( !sessionsActives.contains( session.getId( ) ) && ( sessionsActives.size( ) < _nMaxConnectedUsers ) )
                 {
-                    sessionsActives.add( session.getId(  ) );
+                    sessionsActives.add( session.getId( ) );
                 }
-                else if ( !sessionsActives.contains( session.getId(  ) ) )
-                {
-                    if ( !bNbMaximumUsersReached )
+                else
+                    if ( !sessionsActives.contains( session.getId( ) ) )
                     {
-                        LimitSessionService.getService(  ).setNbMaximumUsersReached( true );
-                        String strNotificationMailingList=DatastoreService.getDataValue(KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MAILING_LIST,null);
-                        if ( !StringUtils.isEmpty(strNotificationMailingList) )
+                        if ( !bNbMaximumUsersReached )
                         {
-                            sendAlertMail( httpRequest,strNotificationMailingList );
+                            LimitSessionService.getService( ).setNbMaximumUsersReached( true );
+                            String strNotificationMailingList = DatastoreService.getDataValue( KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MAILING_LIST, null );
+                            if ( !StringUtils.isEmpty( strNotificationMailingList ) )
+                            {
+                                sendAlertMail( httpRequest, strNotificationMailingList );
+                            }
                         }
+                        HashMap<String, Object> model = new HashMap<String, Object>( );
+                        String strMessage = DatastoreService.getDataValue( KEY_LIMIT_CONNECTED_USERS_MESSAGE,
+                                I18nService.getLocalizedString( I18N_MESSAGE_MESSAGE_MAX_CONNECTED_USERS, request.getLocale( ) ) );
+
+                        model.put( MARK_MESSAGE, strMessage );
+                        model.put( Markers.PAGE_TITLE, I18nService.getLocalizedString( I18N_MESSAGE_TITLE_MAX_CONNECTED_USERS, request.getLocale( ) ) );
+                        model.put( Markers.BASE_URL, AppPathService.getBaseUrl( httpRequest ) );
+                        model.put( MARK_PLUGIN_THEME, null );
+                        model.put( MARK_THEME, ThemesService.getGlobalThemeObject( ) );
+
+                        HtmlTemplate templateMessage = AppTemplateService.getTemplate( TEMPLATE_USER_MESSAGE, request.getLocale( ), model );
+                        // Write the resource content
+                        addHeaderResponse( resp );
+                        resp.setContentType( MARK_HTML_CONTENT_TYPE );
+                        PrintWriter out = response.getWriter( );
+                        out.print( templateMessage.getHtml( ) );
+                        return;
                     }
-                    HashMap<String, Object> model = new HashMap<String, Object>(  );	
-                    String strMessage = DatastoreService.getDataValue(KEY_LIMIT_CONNECTED_USERS_MESSAGE, I18nService.getLocalizedString(I18N_MESSAGE_MESSAGE_MAX_CONNECTED_USERS, request.getLocale(  )));
-                    
-                    model.put(MARK_MESSAGE, strMessage);
-                    model.put( Markers.PAGE_TITLE,
-                            I18nService.getLocalizedString( I18N_MESSAGE_TITLE_MAX_CONNECTED_USERS, request.getLocale(  ) ) );
-                    model.put( Markers.BASE_URL, AppPathService.getBaseUrl( httpRequest ));
-                    model.put( MARK_PLUGIN_THEME, null );
-                    model.put( MARK_THEME, ThemesService.getGlobalThemeObject(  ) );
-                    
-                    HtmlTemplate templateMessage = AppTemplateService.getTemplate( TEMPLATE_USER_MESSAGE, request.getLocale(  ), model );
-                    // Write the resource content
-                    addHeaderResponse(resp);
-                    resp.setContentType(MARK_HTML_CONTENT_TYPE);
-                    PrintWriter out = response.getWriter() ;
-                    out.print(templateMessage.getHtml());
-                    return;                    
-                }
-               
+
             }
         }
 
@@ -191,54 +188,59 @@ public  class LimitConnectedUsersFilter implements Filter
         }
 
         _nMaxConnectedUsers = AppPropertiesService.getPropertyInt( PROPERTY_MAX_CONNECTED_USERS, DEFAULT_NB_MAX );
-   
+
     }
-
-
 
     /**
      * send a alert mail
-     * @param request  @HttpServletRequest
-     * @param strMailingList the mailing list
+     * 
+     * @param request
+     * @HttpServletRequest
+     * @param strMailingList
+     *            the mailing list
      */
-    private void sendAlertMail( HttpServletRequest request,String strMailingList )
+    private void sendAlertMail( HttpServletRequest request, String strMailingList )
     {
-        String strDate = getDateTimeString( new Date(  ).getTime(  ) );
-        HashMap<String, Object> model = new HashMap<String, Object>(  );
-        String strNotificationMessage = DatastoreService.getDataValue(KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MESSAGE, I18nService.getLocalizedString(I18N_MESSAGE_MAIL_SENDER_MAIL_MAX_CONNECTED_USERS, request.getLocale(  )));
-        
+        String strDate = getDateTimeString( new Date( ).getTime( ) );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
+        String strNotificationMessage = DatastoreService.getDataValue( KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MESSAGE,
+                I18nService.getLocalizedString( I18N_MESSAGE_MAIL_SENDER_MAIL_MAX_CONNECTED_USERS, request.getLocale( ) ) );
+
         model.put( MARK_ALERT_DATE, strDate );
-        model.put(MARK_MESSAGE, strNotificationMessage);
-        
-        HtmlTemplate templateMail = AppTemplateService.getTemplate( TEMPLATE_MAIL_MESSAGE, request.getLocale(  ), model );
-        
-        String strNotificationSenderName= DatastoreService.getDataValue(KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SENDER_NAME, I18nService.getLocalizedString(I18N_MESSAGE_MAIL_SENDER_NAME_MAX_CONNECTED_USERS, request.getLocale(  )));
-        String strNotificationSubject= DatastoreService.getDataValue(KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SUBJECT, I18nService.getLocalizedString(I18N_MESSAGE_MAIL_SENDER_SUBJECT_MAX_CONNECTED_USERS, request.getLocale(  )));
-        MailService.sendMailHtml(strMailingList , null, null,strNotificationSenderName,MailService.getNoReplyEmail(),strNotificationSubject,templateMail.getHtml(  ), true );
+        model.put( MARK_MESSAGE, strNotificationMessage );
+
+        HtmlTemplate templateMail = AppTemplateService.getTemplate( TEMPLATE_MAIL_MESSAGE, request.getLocale( ), model );
+
+        String strNotificationSenderName = DatastoreService.getDataValue( KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SENDER_NAME,
+                I18nService.getLocalizedString( I18N_MESSAGE_MAIL_SENDER_NAME_MAX_CONNECTED_USERS, request.getLocale( ) ) );
+        String strNotificationSubject = DatastoreService.getDataValue( KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_SUBJECT,
+                I18nService.getLocalizedString( I18N_MESSAGE_MAIL_SENDER_SUBJECT_MAX_CONNECTED_USERS, request.getLocale( ) ) );
+        MailService.sendMailHtml( strMailingList, null, null, strNotificationSenderName, MailService.getNoReplyEmail( ), strNotificationSubject,
+                templateMail.getHtml( ), true );
     }
 
     private String getDateTimeString( long lTime )
     {
-        StringBuffer strDate = new StringBuffer(  );
+        StringBuffer strDate = new StringBuffer( );
         SimpleDateFormat formatterDateTime = new SimpleDateFormat( "dd'/'MM'/'yyyy' 'HH':'mm", Locale.FRANCE );
         formatterDateTime.format( new java.util.Date( lTime ), strDate, new FieldPosition( 0 ) );
 
-        return strDate.toString(  );
-    }
-    
-    
-    /**
-     * addHeaderResponse
-     * @param resp HttpServletResponse
-     */
-    private void addHeaderResponse(HttpServletResponse resp)
-    {
-    	
-    	  resp.setHeader("Cache-Control","no-cache"); //HTTP 1.1
-          resp.setHeader("Pragma","no-cache"); //HTTP 1.0
-          resp.setDateHeader ("Expires", 0); //prevents caching at the proxy server
-          
+        return strDate.toString( );
     }
 
-    
+    /**
+     * addHeaderResponse
+     * 
+     * @param resp
+     *            HttpServletResponse
+     */
+    private void addHeaderResponse( HttpServletResponse resp )
+    {
+
+        resp.setHeader( "Cache-Control", "no-cache" ); // HTTP 1.1
+        resp.setHeader( "Pragma", "no-cache" ); // HTTP 1.0
+        resp.setDateHeader( "Expires", 0 ); // prevents caching at the proxy server
+
+    }
+
 }

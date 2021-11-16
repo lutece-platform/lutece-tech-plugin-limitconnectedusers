@@ -1,15 +1,14 @@
 {
-  "queries": [
-      
-     {
-      "objectName": "Lutece:type=ConnectedUsers",
-      "resultAlias": "",
-      "attributes": [
+    "queries" : [
         {
-          "name": "ConnectedUsersCount",
-          "resultAlias": "lutece.technical.limitconnectedusers.nbSessions"
+            "objectName" : "Lutece:type=ConnectedUsers",
+            "resultAlias" : "",
+            "attributes" : [
+                {
+                    "name" : "ConnectedUsersCount",
+                    "resultAlias" : "lutece.technical.limitconnectedusers.nbSessions"
+                }
+            ]
         }
-        ]
-      }
     ]
 }

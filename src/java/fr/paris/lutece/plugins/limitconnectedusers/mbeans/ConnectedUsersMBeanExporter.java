@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.limitconnectedusers.mbeans;
 
 import fr.paris.lutece.util.jmx.mbeans.MBeanExporter;
 
-
 /**
  *
  * ConnectedUsersMBeanExporter
@@ -49,7 +48,7 @@ public class ConnectedUsersMBeanExporter implements MBeanExporter
      * {@inheritDoc }
      */
     @Override
-    public String getMBeanName(  )
+    public String getMBeanName( )
     {
         return MBEAN_ROOT_NAME + MBEAN_NAME;
     }
@@ -58,8 +57,8 @@ public class ConnectedUsersMBeanExporter implements MBeanExporter
      * {@inheritDoc }
      */
     @Override
-    public Object getMBean(  )
+    public Object getMBean( )
     {
-        return new ConnectedUsers(  );
+        return new ConnectedUsers( );
     }
 }
