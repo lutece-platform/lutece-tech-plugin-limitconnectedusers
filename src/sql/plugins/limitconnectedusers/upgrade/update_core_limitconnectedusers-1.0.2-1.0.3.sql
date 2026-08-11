@@ -1,3 +1,6 @@
+-- liquibase formatted sql
+-- changeset limitconnectedusers:update_core_limitconnectedusers-1.0.2-1.0.3.sql
+-- preconditions onFail:MARK_RAN onError:WARN
 INSERT INTO core_datastore VALUES ('limitconnectedusers.site_property.limit_message.textblock', '<div class=''alert alert-danger''>Le nombre maximal d''utilisateur connecté simultanément a été atteint</div>');
 INSERT INTO core_datastore VALUES ('limitconnectedusers.site_property.limit_notification_mailing_list.textblock', '');
 INSERT INTO core_datastore VALUES ('limitconnectedusers.site_property.limit_notification_message.textblock', 'Le nombre maximal d''utilisateur connecté simultanément a été atteint');
