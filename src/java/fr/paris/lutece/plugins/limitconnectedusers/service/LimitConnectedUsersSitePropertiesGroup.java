@@ -34,10 +34,12 @@
 package fr.paris.lutece.plugins.limitconnectedusers.service;
 
 import fr.paris.lutece.portal.service.site.properties.ILocalizedSitePropertiesGroup;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * Limit connected Users Site Properties Group
  */
+@ApplicationScoped
 public class LimitConnectedUsersSitePropertiesGroup implements ILocalizedSitePropertiesGroup
 {
     private static final String KEY_NAME = "limitconnectedusers.site_properties_group.name";

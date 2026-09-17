@@ -36,30 +36,19 @@ package fr.paris.lutece.plugins.limitconnectedusers.service;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 /**
  *
  * LimitSessionService
  *
  */
+@ApplicationScoped
 public class LimitSessionService
 {
-    private static LimitSessionService _singleton;
     private Set<String> _listSessionsActive = new HashSet<String>( );
     private boolean _bNbMaximumUsersReached;
 
-    /**
-     *
-     * @return LimitSessionService
-     */
-    public static LimitSessionService getService( )
-    {
-        if ( _singleton == null )
-        {
-            _singleton = new LimitSessionService( );
-        }
-
-        return _singleton;
-    }
 
     /**
      *

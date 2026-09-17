@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.limitconnectedusers.mbeans;
 import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
 
 import java.io.IOException;
+import jakarta.enterprise.inject.spi.CDI;
 
 /**
  *
@@ -50,6 +51,6 @@ public class ConnectedUsers implements ConnectedUsersMBean
     @Override
     public int getConnectedUsersCount( ) throws IOException
     {
-        return LimitSessionService.getService( ).getSessionsActive( ).size( );
+        return CDI.current( ).select( LimitSessionService.class ).get( ).getSessionsActive( ).size( );
     }
 }

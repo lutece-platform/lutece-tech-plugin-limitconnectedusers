@@ -42,15 +42,15 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -65,6 +65,7 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.web.constants.Markers;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import jakarta.enterprise.inject.spi.CDI;
 
 /**
  * Session filter for verify active session
@@ -126,8 +127,9 @@ public class LimitConnectedUsersFilter implements Filter
             HttpServletResponse resp = (HttpServletResponse) response;
             HttpSession session = httpRequest.getSession( true );
 
-            Set<String> sessionsActives = LimitSessionService.getService( ).getSessionsActive( );
-            Boolean bNbMaximumUsersReached = LimitSessionService.getService( ).isNbMaximumUsersReached( );
+            LimitSessionService limitSessionService = CDI.current( ).select( LimitSessionService.class ).get( );
+            Set<String> sessionsActives = limitSessionService.getSessionsActive( );
+            Boolean bNbMaximumUsersReached = limitSessionService.isNbMaximumUsersReached( );
 
             if ( sessionsActives != null )
             {
@@ -140,7 +142,7 @@ public class LimitConnectedUsersFilter implements Filter
                     {
                         if ( !bNbMaximumUsersReached )
                         {
-                            LimitSessionService.getService( ).setNbMaximumUsersReached( true );
+                            limitSessionService.setNbMaximumUsersReached( true );
                             String strNotificationMailingList = DatastoreService.getDataValue( KEY_LIMIT_CONNECTED_USERS_NOTIFICATION_MAILING_LIST, null );
                             if ( !StringUtils.isEmpty( strNotificationMailingList ) )
                             {
@@ -184,7 +186,7 @@ public class LimitConnectedUsersFilter implements Filter
 
         if ( paramValue != null )
         {
-            _bActivate = new Boolean( paramValue );
+            _bActivate = Boolean.parseBoolean( paramValue );
         }
 
         _nMaxConnectedUsers = AppPropertiesService.getPropertyInt( PROPERTY_MAX_CONNECTED_USERS, DEFAULT_NB_MAX );
