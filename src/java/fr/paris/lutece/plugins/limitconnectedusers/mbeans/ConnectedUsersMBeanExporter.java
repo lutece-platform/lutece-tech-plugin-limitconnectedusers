@@ -34,12 +34,14 @@
 package fr.paris.lutece.plugins.limitconnectedusers.mbeans;
 
 import fr.paris.lutece.util.jmx.mbeans.MBeanExporter;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  *
  * ConnectedUsersMBeanExporter
  *
  */
+@ApplicationScoped
 public class ConnectedUsersMBeanExporter implements MBeanExporter
 {
     private static final String MBEAN_NAME = "type=ConnectedUsers";

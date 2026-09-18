@@ -35,10 +35,11 @@ package fr.paris.lutece.plugins.limitconnectedusers.service.sessionlistener;
 
 import java.util.Set;
 
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
+import jakarta.servlet.http.HttpSessionEvent;
+import jakarta.servlet.http.HttpSessionListener;
 
 import fr.paris.lutece.plugins.limitconnectedusers.service.LimitSessionService;
+import jakarta.enterprise.inject.spi.CDI;
 
 /**
  * LimitConnectedUsersSessionListener
@@ -60,15 +61,16 @@ public final class LimitConnectedUsersSessionListener implements HttpSessionList
     public void sessionDestroyed( HttpSessionEvent sessionEvent )
     {
         // On enlève la session de l'utilisateur à la liste des sessions actives
-        Set<String> sessionsActives = LimitSessionService.getService( ).getSessionsActive( );
+        LimitSessionService limitSessionService = CDI.current( ).select( LimitSessionService.class ).get( );
+        Set<String> sessionsActives = limitSessionService.getSessionsActive( );
 
         if ( ( sessionsActives != null ) && sessionsActives.contains( sessionEvent.getSession( ).getId( ) ) )
         {
             sessionsActives.remove( sessionEvent.getSession( ).getId( ) );
 
-            if ( LimitSessionService.getService( ).isNbMaximumUsersReached( ) )
+            if ( limitSessionService.isNbMaximumUsersReached( ) )
             {
-                LimitSessionService.getService( ).setNbMaximumUsersReached( false );
+                limitSessionService.setNbMaximumUsersReached( false );
             }
         }
     }
