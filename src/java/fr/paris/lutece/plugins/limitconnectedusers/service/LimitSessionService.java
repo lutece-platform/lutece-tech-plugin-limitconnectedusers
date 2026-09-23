@@ -33,8 +33,8 @@
  */
 package fr.paris.lutece.plugins.limitconnectedusers.service;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -46,8 +46,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class LimitSessionService
 {
-    private Set<String> _listSessionsActive = new HashSet<String>( );
-    private boolean _bNbMaximumUsersReached;
+    private final Set<String> _listSessionsActive = ConcurrentHashMap.newKeySet( );
+    private volatile boolean _bNbMaximumUsersReached;
 
 
     /**
